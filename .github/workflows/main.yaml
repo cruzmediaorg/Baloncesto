@@ -13,16 +13,16 @@ jobs:
 
   test:
     needs: build
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     steps:
     - name: pruebas-funcionales
       run: echo "pruebas-funcionales"
 
   qa:
     needs: test
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     steps:
-    - name: calidad-codigo
+    - name: ubuntu-latest
       run: echo "calidad-codigo"
 
   deploy:
