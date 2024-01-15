@@ -45,7 +45,7 @@ jobs:
 
   deploy:
     needs: qa
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
     - name: despliegue
       run: echo "despliegue"
