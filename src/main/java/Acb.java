@@ -25,7 +25,7 @@ public class Acb extends HttpServlet {
             bd.insertarJugador(nombre);
         }
         s.setAttribute("nombreCliente", nombreP);
-        // Llamada a la página jsp que nos da las gracias
+        // Llamada a la página jsp que nos da las gracia
         res.sendRedirect(res.encodeRedirectURL("TablaVotos.jsp"));
     }
 
