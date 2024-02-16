@@ -80,7 +80,7 @@ jobs:
           package: target/*.war
   deploy:
     runs-on: ubuntu-latest
-    needs: qa
+    needs: [qa,stage]
     if: github.ref == 'refs/heads/main'
     steps:
       - name: Descargar repositorio
@@ -91,8 +91,12 @@ jobs:
       - name: Aprobación manual para despliegue en producción
         uses: trstringer/manual-approval@v1
         with:
-         secret: ${{ secrets.TOKEN }}
+         secret: ${{ github.TOKEN }}
          approvers: cruzmediaorg
+         issue-title: "Aprobación para despliegue en producción"
+         issue-body: "Por favor, aprueba este despliegue para producción"
+         additional-approved-words: "UAHReady"
+         additional-denied-words: "UAHNotReady"
       - name: Desplegar en Azure
         uses: Azure/webapps-deploy@v2
         with:
