@@ -91,7 +91,7 @@ jobs:
       - name: Aprobación manual para despliegue en producción
         uses: trstringer/manual-approval@v1
         with:
-         secret: ${{ github.TOKEN }}
+         secret: ${{ secrets.TOKEN }}
          approvers: cruzmediaorg
          issue-title: "Aprobación para despliegue en producción"
          issue-body: "Por favor, aprueba este despliegue para producción"
