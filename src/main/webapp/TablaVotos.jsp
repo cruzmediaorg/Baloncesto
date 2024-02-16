@@ -1,5 +1,13 @@
 <html>
-    <head><title>Votaci&oacute;n mejor jugador liga ACB</title></head>
+    <head><title>Votaci&oacute;n mejor jugador liga ACB</title>
+    <style>
+        body {
+            background-color: red;
+            color: yellow;
+            font-family: Arial, sans-serif;
+        }
+    </style>
+    </head>
     <body>
         <font size=10>
         Votaci&oacute;n al mejor jugador de la liga ACB
