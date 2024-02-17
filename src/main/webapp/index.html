@@ -35,7 +35,20 @@ Author : Roberto Barchino (aplicacion original)
         <p align="left">
             <input type="submit" name="B1" value="Votar">
             <input type="reset" name="B2" value="Reset"></p>
+            <button id="botonRestaurar" type="button" onclick="restaurar()">Restaurar votos</button>
     </form>
+    <script>
+        function restaurar() {
+          var xhr = new XMLHttpRequest();
+          xhr.onreadystatechange = function() {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+              alert("Votos eliminados");
+            }
+          };
+          xhr.open("GET", "Restaurar", true);
+          xhr.send();
+        }
+      </script>
 </body>
 </html>
 

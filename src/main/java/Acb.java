@@ -24,11 +24,13 @@ public class Acb extends HttpServlet {
         } else {
             bd.insertarJugador(nombre);
         }
+        // Nombre del cliente para la página de gracias
         s.setAttribute("nombreCliente", nombreP);
         // Llamada a la página jsp que nos da las gracias
         res.sendRedirect(res.encodeRedirectURL("TablaVotos.jsp"));
     }
 
+    @Override
     public void destroy() {
         bd.cerrarConexion();
         super.destroy();
