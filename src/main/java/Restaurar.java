@@ -18,7 +18,7 @@ public class Restaurar extends HttpServlet {
         HttpSession s = req.getSession(true);
         bd.restaurarVotos();
         // Llamada a la página jsp que nos da las gracias
-        res.sendRedirect(res.encodeRedirectURL("TablaVotos.jsp"));
+        res.sendRedirect(res.encodeRedirectURL("VotosRestaurados.jsp"));
     }
 
     public void destroy() {
