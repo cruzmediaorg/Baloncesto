@@ -1,5 +1,5 @@
 <html>
-    <head><title>Votaci&oacute;n mejor jugador liga ACB</title>
+    <head><title>Votos restaurados</title>
     <style>
         body {
             background-color: green;
@@ -9,8 +9,8 @@
     </style>
     </head>
     <body>
-        <font size=10>
-        Los votos han sido restaurados correctamente.
+
+            <h1>Los votos han sido restaurados correctamente.</h1>
         <hr>
 
         <br>¡Muchas gracias por su colaboración!
