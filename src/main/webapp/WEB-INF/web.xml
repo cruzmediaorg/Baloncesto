@@ -11,6 +11,10 @@
         <servlet-name>Restaurar</servlet-name>
         <servlet-class>Restaurar</servlet-class>
     </servlet>
+       <servlet>
+        <servlet-name>VerVotos</servlet-name>
+        <servlet-class>VerVotos</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Acb</servlet-name>
         <url-pattern>/Acb</url-pattern>
@@ -18,6 +22,10 @@
      <servlet-mapping>
         <servlet-name>Restaurar</servlet-name>
         <url-pattern>/Restaurar</url-pattern>
+    </servlet-mapping>
+      <servlet-mapping>
+        <servlet-name>VerVotos</servlet-name>
+        <url-pattern>/VerVotos</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
