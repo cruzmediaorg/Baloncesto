@@ -38,12 +38,17 @@ Author : Roberto Barchino (aplicacion original)
             <button type="button" onclick="restaurar()">Restaurar votos</button>
     </form>
     <script>
-        function restaurar(){
-            var xhr = new XMLHttpRequest();
-            xhr.open("GET", "restaurar", true);
-            xhr.send();
+        function restaurar() {
+          var xhr = new XMLHttpRequest();
+          xhr.onreadystatechange = function() {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+              alert("Votos eliminados");
+            }
+          };
+          xhr.open("GET", "restaurar", true);
+          xhr.send();
         }
-    </script>
+      </script>
 </body>
 </html>
 
