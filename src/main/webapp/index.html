@@ -37,6 +37,7 @@ Author : Roberto Barchino (aplicacion original)
             <input type="reset" name="B2" value="Reset"></p>
             <button id="botonRestaurar" type="button" onclick="restaurar()">Restaurar votos</button>
     </form>
+    <button id="botonVerVotos" type="button" onclick="verVotos()">Ver votos</button>
     <script>
         function restaurar() {
           var xhr = new XMLHttpRequest();
@@ -48,7 +49,20 @@ Author : Roberto Barchino (aplicacion original)
           xhr.open("GET", "Restaurar", true);
           xhr.send();
         }
-      </script>
+        function verVotos() {
+          var xhr = new XMLHttpRequest();
+          xhr.onreadystatechange = function() {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+              document.open();
+              document.write(xhr.responseText);
+              document.close();
+            }
+          };
+          xhr.open("POST", "VerVotos", true);
+          xhr.send();
+
+        }
+   </script>
 </body>
 </html>
 
