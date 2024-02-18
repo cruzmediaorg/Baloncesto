@@ -45,6 +45,6 @@ El establecimiento de este pipeline de CI/CD ha permitido una integración y ent
 
 ## Demo
 
-- [Entorno de Testing](https://www.baloncesto-testing.azurewebsites.net)
-- [Entorno de Preproducción](https://www.baloncesto-pre.azurewebsites.net)
-- [Entorno de Producción](https://www.baloncesto-uah.azurewebsites.net)
+- [Entorno de Testing](https://baloncesto-testing.azurewebsites.net/Baloncesto/)
+- [Entorno de Preproducción](https://baloncesto-pre.azurewebsites.net/Baloncesto/)
+- [Entorno de Producción](https://baloncesto-uah.azurewebsites.net/Baloncesto/)
