@@ -16,14 +16,8 @@ public class ModeloDatos {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
 
-       String dbHost = System.getenv().get("SUPABASE_HOST");
-        String dbPort = System.getenv().get("SUPABASE_PORT");
-        String dbName = System.getenv().get("SUPABASE_DATABASE");
-        String dbUser = System.getenv().get("SUPABASE_USERNAME");
-        String dbPass = System.getenv().get("SUPABASE_PASSWORD");
-
-        String url = "jdbc:postgresql://" + dbHost + ":" + dbPort + "/" + dbName;
-        con = DriverManager.getConnection(url, dbUser, dbPass);
+        String dbUrl = System.getenv().get("DATABASE");
+         con = DriverManager.getConnection(dbUrl);
 
         } catch (Exception e) {
             // No se ha conectado
