@@ -111,15 +111,6 @@ public class ModeloDatos {
         }
         return jugadores;
     }
-
-    public void cerrarConexion() {
-        try {
-            con.close();
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-    }
-
     public int obtenerVotos(String nombre) {
         int votos = 0;
         try {
@@ -137,4 +128,14 @@ public class ModeloDatos {
         }
         return votos;
     }
+
+    public void cerrarConexion() {
+        try {
+            con.close();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+
 }

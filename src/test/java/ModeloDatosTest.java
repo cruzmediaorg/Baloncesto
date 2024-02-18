@@ -7,20 +7,24 @@ public class ModeloDatosTest {
  System.out.println("Prueba de existeJugador");
  String nombre = "";
  ModeloDatos instance = new ModeloDatos();
+ instance.abrirConexion();
  boolean expResult = false;
  boolean result = instance.existeJugador(nombre);
  assertEquals(expResult, result);
-//  fail("Fallo forzado.");
+    instance.cerrarConexion();
  }
-
 
     @Test
     public void testActualizarJugador() {
-            System.out.println("Prueba de actualizarJugador");
-            String nombre = "Llull";
-            ModeloDatos instance = new ModeloDatos();
-            instance.actualizarJugador(nombre);
-            int votos = instance.obtenerVotos(nombre);
-            assertEquals(1, votos);
+        System.out.println("Prueba de actualizarJugador");
+           ModeloDatos instance = new ModeloDatos();
+           String nombre = "Llull";
+           instance.abrirConexion();
+           Integer expResult = 1;
+           instance.actualizarJugador(nombre);
+              Integer result = instance.obtenerVotos(nombre);
+                assertEquals(expResult, result);
+                instance.cerrarConexion();
+
     }
 }
