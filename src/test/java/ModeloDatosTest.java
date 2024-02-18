@@ -12,4 +12,15 @@ public class ModeloDatosTest {
  assertEquals(expResult, result);
 //  fail("Fallo forzado.");
  }
+
+
+    @Test
+    public void testActualizarJugador() {
+            System.out.println("Prueba de actualizarJugador");
+            String nombre = "Llull";
+            ModeloDatos instance = new ModeloDatos();
+            instance.actualizarJugador(nombre);
+            int votos = instance.obtenerVotos(nombre);
+            assertEquals(1, votos);
+    }
 }
