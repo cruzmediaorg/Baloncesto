@@ -4,27 +4,43 @@ on:
   push:
 
 jobs:
+  unit-tests:
+    runs-on: self-hosted
+    steps:
+      - name: Descargar repositorio
+        uses: actions/checkout@v3
+      - name: Compilar la aplicación
+        run: mvn package -DskipTests=true
+      - name: Ejecutar pruebas unitarias
+        run: |
+            mysql -u root < db/baloncesto.sql
+            export DATABASE_HOST="jdbc:mysql://localhost"
+            export DATABASE_PORT="3306"
+            export DATABASE_NAME="baloncesto"
+            export DATABASE_USER="usuario"
+            export DATABASE_PASS="clave"
+            mvn test
+ 
   build:
+    needs: unit-tests
     runs-on: ubuntu-latest
     steps:
-      - name: descargar repositorio
+      - name: Descargar repositorio
         uses: actions/checkout@v3
-      - name: pruebas-unitarias
-        run: mvn test
-      - name: compilar la aplicación sin repetir pruebas
+      - name: Compilar la aplicación
         run: mvn package -DskipTests=true
 
-  test:
+  tests-funcionales:
     needs: build
     runs-on: self-hosted
     steps:
-      - name: descargar repositorio
+      - name: Descargar repositorio
         uses: actions/checkout@v3
-      - name: instalar aplicación en Tomcat
+      - name: Instalar en Tomcat
         run: |
           mvn package -DskipTests=true
           cp -r target/Baloncesto /usr/local/tomcat/webapps
-      - name: preparar base de datos de prueba
+      - name: Preparar la BBDD para pruebas y arrancar Tomcat
         run: |
           mysql -u root < db/baloncesto.sql
           export DATABASE_HOST="jdbc:mysql://localhost"
@@ -39,14 +55,15 @@ jobs:
           mvn failsafe:integration-test failsafe:verify
 
   qa:
-    needs: test
+    needs: tests-funcionales
     runs-on: self-hosted
     continue-on-error: true
     steps:
-      - name: calidad-codigo
+      - name: SonarQube
         run: |
           mvn sonar:sonar -Dsonar.host.url=http://sonarqube:9000 -Dsonar.qualitygate.wait=true -Dsonar.login=admin -Dsonar.password=admin
-  testing:
+  
+  deploy-testing-stage:
     runs-on: ubuntu-latest
     needs: qa
     if: github.ref == 'refs/heads/dev'
@@ -56,15 +73,15 @@ jobs:
       - name: Crear el archivo .war
         run: |
           mvn package -DskipTests=true
-      - name: Desplegar Testing en Azure
+      - name: Desplegar en entorno Testing en Azure
         uses: Azure/webapps-deploy@v2
         with:
           app-name: baloncesto-testing
           publish-profile: ${{ secrets.AZURE_TESTING }}
           package: target/*.war
-  stage:
+  deploy-pre-stage:
     runs-on: ubuntu-latest
-    needs: qa
+    needs: [qa,deploy-testing-stage]
     if: github.ref == 'refs/heads/main'
     steps:
       - name: Descargar repositorio
@@ -72,15 +89,16 @@ jobs:
       - name: Crear el archivo .war
         run: |
           mvn package -DskipTests=true
-      - name: Desplegar Pre en Azure
+      - name: Desplegar en entorno Preproducción en Azure
         uses: Azure/webapps-deploy@v2
         with:
           app-name: baloncesto-pre
           publish-profile: ${{ secrets.AZURE_PRE }}
           package: target/*.war
-  deploy:
+
+  deploy-prod-stage:
     runs-on: ubuntu-latest
-    needs: [qa,stage]
+    needs: [qa,deploy-pre-stage]
     if: github.ref == 'refs/heads/main'
     steps:
       - name: Descargar repositorio
@@ -97,7 +115,7 @@ jobs:
          issue-body: "Por favor, aprueba este despliegue para producción"
          additional-approved-words: "UAHReady"
          additional-denied-words: "UAHNotReady"
-      - name: Desplegar en Azure
+      - name: Desplegar en producción en Azure
         uses: Azure/webapps-deploy@v2
         with:
           app-name: baloncesto-uah
