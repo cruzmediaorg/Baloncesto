@@ -1,4 +1,5 @@
-<html>
+<!DOCTYPE html>
+<html lang="es">
     <head><title>Votaci&oacute;n mejor jugador liga ACB</title>
     <style>
         body {
@@ -9,7 +10,6 @@
     </style>
     </head>
     <body>
-        <font size=10>
         Votaci&oacute;n al mejor jugador de la liga ACB
         <hr>
         <%

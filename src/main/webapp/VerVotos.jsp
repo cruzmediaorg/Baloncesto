@@ -16,8 +16,10 @@
         <table>
             <thead>
                 <tr>
-                    <th>Jugador</th>
-                    <th>Votos</th>
+                    <th id="jugador"
+                    >Jugador</th>
+                    <th id="votos"
+                    >Votos</th>
                 </tr>
             </thead>
             <tbody>

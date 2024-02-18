@@ -7,11 +7,13 @@ public class Acb extends HttpServlet {
 
     private ModeloDatos bd;
 
+    @Override
     public void init(ServletConfig cfg) throws ServletException {
         bd = new ModeloDatos();
         bd.abrirConexion();
     }
 
+    @Override
     public void service(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
         HttpSession s = req.getSession(true);
         String nombreP = (String) req.getParameter("txtNombre");
@@ -24,9 +26,7 @@ public class Acb extends HttpServlet {
         } else {
             bd.insertarJugador(nombre);
         }
-        // Nombre del cliente para la página de gracias
         s.setAttribute("nombreCliente", nombreP);
-        // Llamada a la página jsp que nos da las gracias
         res.sendRedirect(res.encodeRedirectURL("TablaVotos.jsp"));
     }
 

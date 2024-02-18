@@ -1,4 +1,5 @@
-<html>
+<!DOCTYPE html>
+<html lang="es">
     <head><title>Votos restaurados</title>
     <style>
         body {
