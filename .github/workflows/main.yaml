@@ -3,7 +3,6 @@ name: CI
 on:
   push:
 
-
 jobs:
   unit-tests:
     runs-on: self-hosted
@@ -56,7 +55,7 @@ jobs:
           mvn failsafe:integration-test failsafe:verify
 
   qa:
-    needs: test
+    needs: tests-funcionales
     runs-on: self-hosted
     continue-on-error: true
     steps:
@@ -82,7 +81,7 @@ jobs:
           package: target/*.war
   deploy-pre-stage:
     runs-on: ubuntu-latest
-    needs: qa
+    needs: [qa,deploy-testing-stage]
     if: github.ref == 'refs/heads/main'
     steps:
       - name: Descargar repositorio
@@ -99,7 +98,7 @@ jobs:
 
   deploy-prod-stage:
     runs-on: ubuntu-latest
-    needs: [qa,stage]
+    needs: [qa,deploy-pre-stage]
     if: github.ref == 'refs/heads/main'
     steps:
       - name: Descargar repositorio
