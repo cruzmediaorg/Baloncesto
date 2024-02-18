@@ -58,7 +58,7 @@ public class PruebasPhantomjsIT {
         driver.findElement(By.id("botonRestaurar")).click(); // Hacer click en el botón de restaurar votos
 
         // Comprobar que los votos se han restaurado en /VerVotos.jsp
-        driver.navigate().to("http://localhost:8080/Baloncesto/Ver");
+        driver.navigate().to("http://localhost:8080/Baloncesto/VerVotos");
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 
         WebElement llullVotes = driver.findElement(By.id("Llullvoto"));
