@@ -65,6 +65,7 @@ public class PruebasPhantomjsIT {
         WebElement rudyVotes = driver.findElement(By.id("Rudyvoto"));
         WebElement felipeVotes = driver.findElement(By.id("Tavaresvoto"));
 
+        // Comprobar que los votos se han restaurado
         assertEquals("0", llullVotes.getText());
         assertEquals("0", rudyVotes.getText());
         assertEquals("0", felipeVotes.getText());
@@ -72,4 +73,36 @@ public class PruebasPhantomjsIT {
         // Cerrar el navegador
         driver.quit();
     }
+
+    @Test
+    public void nuevoJugadorTest() {
+        // Visitar la página principal
+        driver.navigate().to("http://localhost:8080/Baloncesto/");
+        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+
+        // Hacer una votación
+        driver.findElement(By.name("txtNombre")).sendKeys("Luis");
+        driver.findElement(By.name("txtMail")).sendKeys("l.cruza@uah.edu.es");
+        driver.findElement(By.id("otroRadio")).click(); // Seleccionar el ultimo radio button (Otros)
+        driver.findElement(By.name("txtOtros")).sendKeys("LukaDoncic");
+        driver.findElement(By.name("B1")).click(); // Hacer click en el botón de votar
+        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+
+        // Comprobar que los votos se han añadido en /VerVotos.jsp
+        driver.navigate().to("http://localhost:8080/Baloncesto/VerVotos");
+        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+
+        WebElement lukaNombre = driver.findElement(By.id("LukaDoncic"));
+        WebElement lukaVotes = driver.findElement(By.id("LukaDoncicvoto"));
+
+
+        // Comprobar que los votos se han restaurado
+        assertEquals("LukaDoncic", lukaNombre.getText());
+        assertEquals("1", lukaVotes.getText());
+
+        // Cerrar el navegador
+        driver.quit();
+    }
+
+
 }

@@ -26,7 +26,8 @@
                    if(nombres != null && votos != null) {
                        for (int i = 0; i < nombres.size(); i++) { %>
                            <tr>
-                               <td><%= nombres.get(i) %></td>
+                               <td id="<%= nombres.get(i) %>"
+                               ><%= nombres.get(i) %></td>
                                <td id="<%= nombres.get(i) %>voto"><%= votos.get(i) %></td>
                            </tr>
                 <%     }
