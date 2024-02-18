@@ -13,8 +13,13 @@ jobs:
         run: mvn package -DskipTests=true
       - name: Ejecutar pruebas unitarias
         run: |
-          export DATABASE="postgres://postgres.lrnonozwsarvuilbqvkd:TvOgeJRNsUiCuUoJ@aws-0-eu-central-1.pooler.supabase.com:5432/postgres"
-          mvn test
+            mysql -u root < db/baloncesto.sql
+            export DATABASE_HOST="jdbc:mysql://localhost"
+            export DATABASE_PORT="3306"
+            export DATABASE_NAME="baloncesto"
+            export DATABASE_USER="usuario"
+            export DATABASE_PASS="clave"
+            mvn test
 
   tests-funcionales:
     needs: build-unit-testing
@@ -57,13 +62,12 @@ jobs:
       - name: Descargar repositorio
         uses: actions/checkout@v3
       - name: Crear el archivo .war
-      # Usamos supabase para la base de datos
         run: |
-          export DATABASE_HOST="jdbc:postgresql://aws-0-eu-central-1.pooler.supabase.com"
-          export DATABASE_PORT="5432"
+         export DATABASE_HOST="${{ secrets.BBDD_HOST_TESTING }}
+          export DATABASE_PORT="3306"
           export DATABASE_NAME="baloncesto"
-          export DATABASE_USER="postgres"
-          export DATABASE_PASS="TvOgeJRNsUiCuUoJ"
+          export DATABASE_USER="uahadmin"
+          export DATABASE_PASS="${{ secrets.BBDD_PASS_TESTING }}"
           mvn package -DskipTests=true
       - name: Desplegar en entorno Testing en Azure
         uses: Azure/webapps-deploy@v2
@@ -71,8 +75,6 @@ jobs:
           app-name: baloncesto-testing
           publish-profile: ${{ secrets.AZURE_TESTING }}
           package: target/*.war
-
-
   deploy-pre-stage:
     runs-on: ubuntu-latest
     needs: [qa,deploy-testing-stage]
@@ -82,6 +84,11 @@ jobs:
         uses: actions/checkout@v3
       - name: Crear el archivo .war
         run: |
+         export DATABASE_HOST="${{ secrets.BBDD_HOST_PRE }}
+          export DATABASE_PORT="3306"
+          export DATABASE_NAME="baloncesto"
+          export DATABASE_USER="uahadmin"
+          export DATABASE_PASS="${{ secrets.BBDD_PASS_PRE }}"
           mvn package -DskipTests=true
       - name: Desplegar en entorno Preproducción en Azure
         uses: Azure/webapps-deploy@v2
@@ -100,6 +107,11 @@ jobs:
         uses: actions/checkout@v3
       - name: Crear el archivo .war
         run: |
+         export DATABASE_HOST="${{ secrets.BBDD_HOST_PRO }}
+          export DATABASE_PORT="3306"
+          export DATABASE_NAME="baloncesto"
+          export DATABASE_USER="uahadmin"
+          export DATABASE_PASS="${{ secrets.BBDD_PASS_PRO }}"
           mvn package -DskipTests=true
       - name: Aprobación manual para despliegue en producción
         uses: trstringer/manual-approval@v1
@@ -116,7 +128,3 @@ jobs:
           app-name: baloncesto-uah
           publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
           package: target/*.war
-
-
-## TvOgeJRNsUiCuUoJ
-# postgres://postgres.lrnonozwsarvuilbqvkd:[YOUR-PASSWORD]@aws-0-eu-central-1.pooler.supabase.com:5432/postgres

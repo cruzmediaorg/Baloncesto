@@ -16,12 +16,19 @@ public class ModeloDatos {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
 
-        String dbUrl = System.getenv().get("DATABASE");
-         con = DriverManager.getConnection(dbUrl);
+            // Con variables de entorno
+            String dbHost = System.getenv().get("DATABASE_HOST");
+            String dbPort = System.getenv().get("DATABASE_PORT");
+            String dbName = System.getenv().get("DATABASE_NAME");
+            String dbUser = System.getenv().get("DATABASE_USER");
+            String dbPass = System.getenv().get("DATABASE_PASS");
+
+            String url = dbHost + ":" + dbPort + "/" + dbName;
+            con = DriverManager.getConnection(url, dbUser, dbPass);
 
         } catch (Exception e) {
             // No se ha conectado
-            Logger.getLogger("No se ha conectado");
+            Logger.getLogger("No se ha podido conectar");
             Logger.getLogger("El error es: " + e.getMessage());
         }
     }
@@ -42,6 +49,7 @@ public class ModeloDatos {
             rs.close();
             set.close();
         } catch (Exception e) {
+            // No lee de la tabla
             Logger.getLogger("No lee de la tabla");
             Logger.getLogger("El error es: " + e.getMessage());
         }
@@ -55,7 +63,8 @@ public class ModeloDatos {
         rs.close();
         set.close();
     } catch (Exception e) {
-        Logger.getLogger("No modifica la tabla");
+        // No modifica la tabla
+        Logger.getLogger("No lee de la tabla");
         Logger.getLogger("El error es: " + e.getMessage());
     }
 }
