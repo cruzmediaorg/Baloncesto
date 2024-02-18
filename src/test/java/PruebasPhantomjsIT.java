@@ -63,7 +63,7 @@ public class PruebasPhantomjsIT {
 
         WebElement llullVotes = driver.findElement(By.id("Llullvoto"));
         WebElement rudyVotes = driver.findElement(By.id("Rudyvoto"));
-        WebElement felipeVotes = driver.findElement(By.id("Felipevoto"));
+        WebElement felipeVotes = driver.findElement(By.id("Tavaresvoto"));
 
         assertEquals("0", llullVotes.getText());
         assertEquals("0", rudyVotes.getText());
